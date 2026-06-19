@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitAchieve | Ultimate GitHub Achievement Hunter Guide</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="glow-bg"></div>
+    
+    <header class="app-header">
+        <div class="container header-container">
+            <div class="logo">
+                <span class="logo-icon">🚀</span>
+                <h1>GitAchieve</h1>
+            </div>
+            <div class="header-right">
+                <div class="lang-selector">
+                    <select id="lang-select">
+                        <option value="en">English (EN)</option>
+                        <option value="id">Bahasa Indonesia (ID)</option>
+                    </select>
+                </div>
+                <div class="badge-count-display">
+                    <span id="completed-label" data-i18n="completed">Completed:</span>
+                    <strong id="completed-count">0</strong>/<span id="total-count">7</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <!-- Configuration Section -->
+        <section class="config-section glass-panel">
+            <h2 data-i18n="configTitle">⚙️ Dashboard Configuration</h2>
+            <p class="config-subtitle" data-i18n="configSubtitle">Configure your details below. The scripts and commands will dynamically update with your repository details.</p>
+            <div class="config-grid">
+                <div class="input-group">
+                    <label for="username" data-i18n="labelUsername">GitHub Username</label>
+                    <input type="text" id="username" value="your-username" placeholder="e.g. octocat">
+                </div>
+                <div class="input-group">
+                    <label for="repo-name" data-i18n="labelRepoName">Farming Repository</label>
+                    <input type="text" id="repo-name" value="github-achievement-farm" placeholder="e.g. github-achievement-farm">
+                </div>
+                <div class="input-group">
+                    <label for="shell-type" data-i18n="labelShellType">Shell Script Target</label>
+                    <select id="shell-type">
+                        <option value="bash" data-i18n="shellOptionBash">Bash Script (Linux / macOS / Git Bash)</option>
+                        <option value="pwsh" data-i18n="shellOptionPwsh">PowerShell (Windows)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="warning-alert">
+                <span class="alert-icon">⚠️</span>
+                <div class="alert-text">
+                    <strong id="warning-title" data-i18n="warningTitle">Important Safety Tip:</strong> <span id="warning-text" data-i18n="warningText">Always run achievement farming scripts on a <strong>private repository</strong> created solely for this purpose. This prevents polluting your active development repos and ensures zero impact on other collaborators.</span>
+                </div>
+            </div>
+        </section>
+
+        <div class="layout-grid">
+            <!-- Achievements List -->
+            <section class="achievements-section">
+                <h2 data-i18n="availableAchievements">🏆 Available Achievements</h2>
+                <div class="achievements-grid" id="achievements-grid">
+                    <!-- Badge Cards will be dynamically rendered/controlled here -->
+                    
+                    <!-- YOLO Card -->
+                    <div class="achievement-card active" data-badge="yolo" onclick="selectBadge('yolo')">
+                        <div class="card-checkbox-container" onclick="toggleBadgeComplete(event, 'yolo')">
+                            <input type="checkbox" id="check-yolo" class="badge-checkbox">
+                            <label for="check-yolo" class="checkbox-label"></label>
+                        </div>
+                        <div class="badge-icon-wrapper yolo-glow">
+                            <img class="badge-svg" src="https://raw.githubusercontent.com/drknzz/GitHub-Achievements/main/Media/Badges/YOLO/PNG/YOLO_Badge.png" alt="YOLO">
+                        </div>
+                        <div class="card-info">
+                            <h3>YOLO</h3>
+                            <p>Merge a pull request without code review.</p>
+                            <span class="badge-tier bronze">Common</span>
+                        </div>
+                    </div>
+
+                    <!-- Pull Shark Card -->
+                    <div class="achievement-card" data-badge="pull-shark" onclick="selectBadge('pull-shark')">
+                        <div class="card-checkbox-container" onclick="toggleBadgeComplete(event, 'pull-shark')">
+                            <input type="checkbox" id="check-pull-shark" class="badge-checkbox">
+                            <label for="check-pull-shark" class="checkbox-label"></label>
+                        </div>
+                        <div class="badge-icon-wrapper pull-shark-glow">
+                            <img class="badge-svg" src="https://raw.githubusercontent.com/drknzz/GitHub-Achievements/main/Media/Badges/Pull-Shark/PNG/PullShark.png" alt="Pull Shark">
+                        </div>
+                        <div class="card-info">
+                            <h3>Pull Shark</h3>
+                            <p>Opened and merged pull requests.</p>
+                            <span class="badge-tier silver" id="shark-tier-label">Tiers 1-4</span>
+                        </div>
+                    </div>
+
+                    <!-- Quickdraw Card -->
+                    <div class="achievement-card" data-badge="quickdraw" onclick="selectBadge('quickdraw')">
+                        <div class="card-checkbox-container" onclick="toggleBadgeComplete(event, 'quickdraw')">
+                            <input type="checkbox" id="check-quickdraw" class="badge-checkbox">
+                            <label for="check-quickdraw" class="checkbox-label"></label>
+                        </div>
+                        <div class="badge-icon-wrapper quickdraw-glow">
+                            <img class="badge-svg" src="https://raw.githubusercontent.com/drknzz/GitHub-Achievements/main/Media/Badges/Quick-Draw/PNG/Skin-Tones/QuickDraw_SkinTone1.png" alt="Quickdraw">
+                        </div>
+                        <div class="card-info">
+                            <h3>Quickdraw</h3>
+                            <p>Close an issue or PR within 5 mins.</p>
+                            <span class="badge-tier bronze">Common</span>
+                        </div>
+                    </div>
+
+                    <!-- Pair Extraordinaire Card -->
+                    <div class="achievement-card" data-badge="pair-extraordinaire" onclick="selectBadge('pair-extraordinaire')">
+                        <div class="card-checkbox-container" onclick="toggleBadgeComplete(event, 'pair-extraordinaire')">
+                            <input type="checkbox" id="check-pair" class="badge-checkbox">
+                            <label for="check-pair" class="checkbox-label"></label>
+                        </div>
+                        <div class="badge-icon-wrapper pair-glow">
+                            <img class="badge-svg" src="https://raw.githubusercontent.com/drknzz/GitHub-Achievements/main/Media/Badges/Pair-Extraordinaire/PNG/PairExtraordinaire.png" alt="Pair Extraordinaire">
+                        </div>
+                        <div class="card-info">
+                            <h3>Pair Extraordinaire</h3>
+                            <p>Co-authored a commit in a merged PR.</p>
+                            <span class="badge-tier gold">Rare</span>
+                        </div>
+                    </div>
+
+                    <!-- Galaxy Brain Card -->
+                    <div class="achievement-card" data-badge="galaxy-brain" onclick="selectBadge('galaxy-brain')">
+                        <div class="card-checkbox-container" onclick="toggleBadgeComplete(event, 'galaxy-brain')">
+                            <input type="checkbox" id="check-galaxy" class="badge-checkbox">
+                            <label for="check-galaxy" class="checkbox-label"></label>
+                        </div>
+                        <div class="badge-icon-wrapper galaxy-glow">
+                            <img class="badge-svg" src="https://raw.githubusercontent.com/drknzz/GitHub-Achievements/main/Media/Badges/Galaxy-Brain/PNG/GalaxyBrain.png" alt="Galaxy Brain">
+                        </div>
+                        <div class="card-info">
+                            <h3>Galaxy Brain</h3>
+                            <p>Answer accepted in Discussions.</p>
+                            <span class="badge-tier purple">Legendary</span>
+                        </div>
+                    </div>
+
+                    <!-- Starstruck Card -->
+                    <div class="achievement-card" data-badge="starstruck" onclick="selectBadge('starstruck')">
+                        <div class="card-checkbox-container" onclick="toggleBadgeComplete(event, 'starstruck')">
+                            <input type="checkbox" id="check-starstruck" class="badge-checkbox">
+                            <label for="check-starstruck" class="checkbox-label"></label>
+                        </div>
+                        <div class="badge-icon-wrapper starstruck-glow">
+                            <img class="badge-svg" src="https://raw.githubusercontent.com/drknzz/GitHub-Achievements/main/Media/Badges/Star-Struck/PNG/Skin-Tones/StarStruck_SkinTone1.png" alt="Starstruck">
+                        </div>
+                        <div class="card-info">
+                            <h3>Starstruck</h3>
+                            <p>Repo received 16+ stars.</p>
+                            <span class="badge-tier silver">Tiers 1-4</span>
+                        </div>
+                    </div>
+
+                    <!-- Public Sponsor Card -->
+                    <div class="achievement-card" data-badge="public-sponsor" onclick="selectBadge('public-sponsor')">
+                        <div class="card-checkbox-container" onclick="toggleBadgeComplete(event, 'public-sponsor')">
+                            <input type="checkbox" id="check-sponsor" class="badge-checkbox">
+                            <label for="check-sponsor" class="checkbox-label"></label>
+                        </div>
+                        <div class="badge-icon-wrapper sponsor-glow">
+                            <img class="badge-svg" src="https://raw.githubusercontent.com/drknzz/GitHub-Achievements/main/Media/Badges/GitHub-Sponsor/PNG/GitHubSponsorBadge.png" alt="Public Sponsor">
+                        </div>
+                        <div class="card-info">
+                            <h3>Public Sponsor</h3>
+                            <p>Sponsored a project or contributor.</p>
+                            <span class="badge-tier pink">Special</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Guide Panel -->
+            <section class="guide-panel glass-panel" id="guide-panel">
+                <div class="guide-header">
+                    <div class="guide-title-container">
+                        <div class="guide-badge-preview" id="guide-badge-img">
+                            <!-- Selected SVG loaded here -->
+                        </div>
+                        <div>
+                            <h2 id="guide-title">YOLO</h2>
+                            <span class="badge-tier bronze" id="guide-tier">Common</span>
+                        </div>
+                    </div>
+                    <div class="guide-badge-actions">
+                        <button class="btn btn-secondary" id="mark-complete-btn" onclick="markSelectedAsComplete()">Mark as Unlocked</button>
+                    </div>
+                </div>
+
+                <div class="guide-body">
+                    <p class="badge-long-description" id="guide-desc">
+                        Merge a pull request without code review.
+                    </p>
+
+                    <!-- Extra settings for specific badges like Pull Shark -->
+                    <div class="custom-badge-options hidden" id="shark-options-container">
+                        <label for="shark-pr-count" data-i18n="sharkPrCountLabel">Number of Pull Requests to farm:</label>
+                        <select id="shark-pr-count">
+                            <option value="2" data-i18n="sharkOptionT1">2 PRs (Bronze / Tier 1)</option>
+                            <option value="16" data-i18n="sharkOptionT2">16 PRs (Silver / Tier 2)</option>
+                            <option value="128" data-i18n="sharkOptionT3">128 PRs (Gold / Tier 3)</option>
+                            <option value="1024" data-i18n="sharkOptionT4">1024 PRs (Platinum / Tier 4)</option>
+                        </select>
+                    </div>
+
+                    <div class="instructions-section">
+                        <h3 data-i18n="howToUnlock">🛠️ How to Unlock</h3>
+                        <ol class="step-list" id="step-list">
+                            <li>Ensure you have the <a href="https://cli.github.com/" target="_blank" rel="noopener">GitHub CLI (gh)</a> installed and authenticated (<code>gh auth login</code>).</li>
+                            <li>Open a terminal or command prompt inside your local repository.</li>
+                            <li>Copy and execute the generated script below.</li>
+                        </ol>
+                    </div>
+
+                    <div class="script-section" id="script-section">
+                        <div class="script-header">
+                            <span class="script-filename" id="script-filename">yolo-farm.sh</span>
+                            <button class="btn btn-copy" onclick="copyCode()">
+                                <svg class="copy-icon" viewBox="0 0 24 24" width="16" height="16">
+                                    <path fill="currentColor" d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                                </svg>
+                                <span id="copy-text" data-i18n="copyScript">Copy Script</span>
+                            </button>
+                        </div>
+                        <div class="code-wrapper">
+                            <pre><code id="code-block" class="language-bash"># Code will load here</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">Copied to clipboard! 📋</div>
+
+    <footer class="app-footer">
+        <p data-i18n="footerText">Built with ❤️ for GitHub Contributors. Please use responsibly on personal test repositories.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
