@@ -1,7 +1,7 @@
 // State Management
 const state = {
     username: 'your-username',
-    repoName: 'github-achievement-farm',
+    repoName: 'devops-stress-testing',
     shellType: 'bash',
     selectedBadge: 'yolo',
     sharkPrCount: '2',
