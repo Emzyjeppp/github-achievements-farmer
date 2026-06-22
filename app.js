@@ -647,8 +647,8 @@ Write-Host "Done! Quickdraw badge unlocked."`;
     }
 
     if (badgeKey === 'pair-extraordinaire') {
-        const coAuthorName = "GitHub-Achievement-Bot";
-        const coAuthorEmail = "bot@achievements.github.com";
+        const coAuthorName = "github-actions[bot]";
+        const coAuthorEmail = "41898282+github-actions[bot]@users.noreply.github.com";
         
         if (isBash) {
             return `# Pair Extraordinaire Badge Farming Script (Bash)
