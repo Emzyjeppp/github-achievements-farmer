@@ -3,7 +3,7 @@
     --bg-color: #080c10;
     --card-bg: rgba(22, 27, 34, 0.65);
     --border-color: rgba(48, 54, 61, 0.5);
-    --border-hover: rgba(139, 92, 246, 0.6);
+    --border-hover: rgba(255, 255, 255, 0.2);
     
     --text-primary: #f0f6fc;
     --text-secondary: #8b949e;
@@ -37,9 +37,14 @@ body {
     background-color: var(--bg-color);
     color: var(--text-primary);
     font-family: 'Inter', sans-serif;
-    line-height: 1.6;
+    line-height: 1.5;
     overflow-x: hidden;
     min-height: 100vh;
+}
+
+/* Ensure all elements default to the primary font */
+input, select, textarea, button, label {
+    font-family: 'Inter', sans-serif;
 }
 
 /* Background Ambient Glow */
@@ -82,11 +87,11 @@ body {
     background: var(--card-bg);
     backdrop-filter: var(--glass-blur) saturate(180%);
     -webkit-backdrop-filter: var(--glass-blur) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(255, 255, 255, 0.09);
     border-radius: 16px;
     padding: 28px;
     box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1),
-                0 12px 40px rgba(0, 0, 0, 0.4);
+                0 6px 20px rgba(0, 0, 0, 0.35);
     transition: var(--transition-smooth);
 }
 
@@ -100,7 +105,7 @@ body {
 
 /* Header */
 .app-header {
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1.5px solid var(--border-color);
     padding: 16px 0;
     background: rgba(8, 12, 16, 0.85);
     backdrop-filter: var(--glass-blur);
@@ -146,14 +151,13 @@ body {
 
 .lang-selector select {
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-color);
+    border: 1.5px solid var(--border-color);
     color: var(--text-primary);
     padding: 8px 16px;
     border-radius: 30px;
     font-size: 13px;
     outline: none;
     cursor: pointer;
-    font-family: inherit;
     transition: var(--transition-smooth);
 }
 
@@ -164,7 +168,7 @@ body {
 
 .badge-count-display {
     background: rgba(255, 255, 255, 0.05);
-    border: 1px solid var(--border-color);
+    border: 1.5px solid var(--border-color);
     padding: 8px 18px;
     border-radius: 30px;
     font-size: 14px;
@@ -199,6 +203,7 @@ body {
 .config-subtitle {
     color: var(--text-secondary);
     font-size: 14px;
+    line-height: 1.4;
     margin-bottom: 20px;
 }
 
@@ -225,11 +230,10 @@ body {
 
 .input-group input, .input-group select {
     background: rgba(13, 17, 23, 0.7);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
     color: var(--text-primary);
     padding: 12px 16px;
     border-radius: 12px;
-    font-family: inherit;
     font-size: 14px;
     transition: var(--transition-smooth);
     box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
@@ -238,7 +242,7 @@ body {
 .input-group input:focus, .input-group select:focus {
     outline: none;
     border-color: var(--accent-purple);
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25),
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2),
                 inset 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
@@ -251,7 +255,7 @@ body {
     padding: 16px;
     border-radius: 12px;
     margin-top: 10px;
-    border: 1px solid rgba(245, 175, 25, 0.1);
+    border: 1.5px solid rgba(245, 175, 25, 0.1);
     border-left-width: 4px;
 }
 
@@ -296,8 +300,8 @@ body {
 }
 
 .achievement-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
+    background: linear-gradient(135deg, rgba(22, 27, 34, 0.4) 0%, rgba(22, 27, 34, 0.7) 100%);
+    border: 1.5px solid var(--border-color);
     border-radius: 16px;
     padding: 18px;
     display: flex;
@@ -309,17 +313,17 @@ body {
 }
 
 .achievement-card:hover {
-    transform: translateY(-4px) scale(1.015);
-    border-color: rgba(139, 92, 246, 0.6);
-    background: rgba(22, 27, 34, 0.85);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4),
-                0 0 20px rgba(139, 92, 246, 0.15);
+    transform: translateY(-2px);
+    border-color: var(--border-hover);
+    background: linear-gradient(135deg, rgba(30, 37, 48, 0.5) 0%, rgba(22, 27, 34, 0.8) 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .achievement-card.active {
     border-color: var(--accent-purple);
-    background: rgba(139, 92, 246, 0.07);
-    box-shadow: 0 0 25px rgba(139, 92, 246, 0.2);
+    border-width: 2px;
+    background: rgba(139, 92, 246, 0.08);
+    box-shadow: none;
 }
 
 /* Custom Checkbox on card */
@@ -350,7 +354,6 @@ body {
 .badge-checkbox:checked + .checkbox-label {
     background: #2ea44f;
     border-color: #34d058;
-    box-shadow: 0 0 10px rgba(46, 164, 79, 0.4);
 }
 
 .badge-checkbox:checked + .checkbox-label::after {
@@ -376,22 +379,12 @@ body {
 .badge-svg {
     width: 100%;
     height: 100%;
-    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
     transition: var(--transition-smooth);
 }
 
 .achievement-card:hover .badge-svg {
-    transform: scale(1.1) rotate(5deg);
+    transform: scale(1.08) rotate(3deg);
 }
-
-/* Glowing effects for badges */
-.yolo-glow { filter: drop-shadow(0 0 8px rgba(255, 75, 43, 0.4)); }
-.pull-shark-glow { filter: drop-shadow(0 0 8px rgba(0, 198, 255, 0.4)); }
-.quickdraw-glow { filter: drop-shadow(0 0 8px rgba(248, 87, 166, 0.4)); }
-.pair-glow { filter: drop-shadow(0 0 8px rgba(168, 192, 255, 0.4)); }
-.galaxy-glow { filter: drop-shadow(0 0 8px rgba(144, 19, 254, 0.4)); }
-.starstruck-glow { filter: drop-shadow(0 0 8px rgba(245, 175, 25, 0.4)); }
-.sponsor-glow { filter: drop-shadow(0 0 8px rgba(255, 8, 68, 0.4)); }
 
 .card-info {
     flex-grow: 1;
@@ -439,7 +432,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1.5px solid var(--border-color);
     padding-bottom: 20px;
     margin-bottom: 20px;
 }
@@ -487,7 +480,7 @@ body {
 
 .custom-badge-options select {
     background: var(--bg-color);
-    border: 1px solid var(--border-color);
+    border: 1.5px solid var(--border-color);
     color: var(--text-primary);
     padding: 8px 12px;
     border-radius: 8px;
@@ -517,21 +510,19 @@ body {
 }
 
 .step-list li a {
-    color: var(--accent-blue);
-    text-decoration: none;
-}
-
-.step-list li a:hover {
+    color: var(--accent-purple);
     text-decoration: underline;
 }
 
-/* Code block section */
+.step-list li a:hover {
+    color: var(--text-primary);
+}
+
+/* Code block section (Integrated seamlessly to avoid Nested Card issue) */
 .script-section {
     background: #090d13;
-    border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
 }
 
 .script-header {
@@ -540,7 +531,7 @@ body {
     align-items: center;
     background: #161b22;
     padding: 12px 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.04);
 }
 
 .script-filename {
@@ -568,7 +559,6 @@ body {
 
 /* Buttons */
 .btn {
-    font-family: inherit;
     padding: 12px 24px;
     border-radius: 30px;
     font-weight: 600;
@@ -587,23 +577,19 @@ body {
 }
 
 .btn-secondary {
-    background: linear-gradient(135deg, #238636 0%, #2ea44f 100%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    background: #238636;
+    border: 1.5px solid rgba(255, 255, 255, 0.15);
     color: #fff;
-    box-shadow: 0 4px 15px rgba(46, 164, 79, 0.3);
 }
 
 .btn-secondary:hover {
-    background: linear-gradient(135deg, #2ea44f 0%, #34d058 100%);
-    box-shadow: 0 6px 20px rgba(46, 164, 79, 0.4);
-    transform: translateY(-1px);
+    background: #2ea44f;
 }
 
 .btn-secondary.unlocked {
     background: rgba(255, 255, 255, 0.06);
-    border: 1px solid var(--border-color);
+    border: 1.5px solid var(--border-color);
     color: var(--text-primary);
-    box-shadow: none;
 }
 
 .btn-secondary.unlocked:hover {
@@ -613,7 +599,7 @@ body {
 
 .btn-copy {
     background: transparent;
-    border: 1px solid var(--border-color);
+    border: 1.5px solid var(--border-color);
     color: var(--text-secondary);
     padding: 6px 16px;
     font-size: 12px;
@@ -634,12 +620,12 @@ body {
     position: fixed;
     bottom: 30px;
     right: 30px;
-    background: rgba(22, 27, 34, 0.95);
-    border: 1px solid var(--border-hover);
+    background: rgba(30, 35, 45, 0.95);
+    border: 1.5px solid rgba(255, 255, 255, 0.08);
     color: var(--text-primary);
     padding: 12px 24px;
     border-radius: 12px;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
     z-index: 1000;
     opacity: 0;
     transform: translateY(10px);
@@ -661,7 +647,7 @@ body {
 .app-footer {
     text-align: center;
     padding: 40px 0;
-    border-top: 1px solid var(--border-color);
+    border-top: 1.5px solid var(--border-color);
     color: var(--text-muted);
     font-size: 13px;
     background: rgba(8, 12, 16, 0.4);
