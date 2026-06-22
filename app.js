@@ -681,11 +681,6 @@ gh pr merge --merge --delete-branch`;
     }
 
     return '';
-}ch`;
-        }
-    }
-
-    return '';
 }
 
 // Copy Code to Clipboard with Toast Notification
