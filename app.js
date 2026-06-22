@@ -465,7 +465,6 @@ function updateUI() {
     }
 }
 
-// Generate the shell script dynamically based on inputs
 function generateScript(badgeKey) {
     const username = state.username;
     const repo = state.repoName;
@@ -474,52 +473,38 @@ function generateScript(badgeKey) {
     if (badgeKey === 'yolo') {
         if (isBash) {
             return `# YOLO Badge Farming Script (Bash)
-# Prerequisites: GitHub CLI (gh) installed and logged in.
+# Prerequisites: Run this INSIDE your local repository directory.
 
-REPO_NAME="${repo}"
-USERNAME="${username}"
-
-# 1. Clone your farming repository and navigate inside
-git clone "https://github.com/\${USERNAME}/\${REPO_NAME}.git"
-cd "\${REPO_NAME}"
-
-# 2. Check out a new branch
+# 1. Check out a new branch
 git checkout -b yolo-branch
 
-# 3. Create a commit on this branch
+# 2. Create a commit on this branch
 echo "YOLO Farming: $(date)" >> README.md
 git add README.md
 git commit -m "feat: yolo farming commit"
 
-# 4. Push the branch to GitHub
+# 3. Push the branch to GitHub
 git push origin yolo-branch
 
-# 5. Open and merge the Pull Request immediately without reviews
+# 4. Open and merge the Pull Request immediately without reviews
 gh pr create --title "Farming YOLO Badge" --body "Merge without code review" --head yolo-branch --base main
 gh pr merge --merge --delete-branch`;
         } else {
             return `# YOLO Badge Farming Script (PowerShell)
-# Prerequisites: GitHub CLI (gh) installed and logged in.
+# Prerequisites: Run this INSIDE your local repository directory.
 
-$REPO_NAME="${repo}"
-$USERNAME="${username}"
-
-# 1. Clone your farming repository and navigate inside
-git clone "https://github.com/\${USERNAME}/\${REPO_NAME}.git"
-cd $REPO_NAME
-
-# 2. Check out a new branch
+# 1. Check out a new branch
 git checkout -b yolo-branch
 
-# 3. Create a commit on this branch
+# 2. Create a commit on this branch
 Add-Content README.md "\`nYOLO Farming: $(Get-Date)"
 git add README.md
 git commit -m "feat: yolo farming commit"
 
-# 4. Push the branch to GitHub
+# 3. Push the branch to GitHub
 git push origin yolo-branch
 
-# 5. Open and merge the Pull Request immediately without reviews
+# 4. Open and merge the Pull Request immediately without reviews
 gh pr create --title "Farming YOLO Badge" --body "Merge without code review" --head yolo-branch --base main
 gh pr merge --merge --delete-branch`;
         }
@@ -529,12 +514,9 @@ gh pr merge --merge --delete-branch`;
         const prCount = state.sharkPrCount;
         if (isBash) {
             return `# Pull Shark Badge Farming Script (Bash)
-# Generates and merges ${prCount} pull requests sequentially
+# Generates and merges ${prCount} pull requests sequentially with rate-limit protection.
 
-REPO_NAME="${repo}"
 PR_COUNT=${prCount}
-
-cd "\${REPO_NAME}"
 
 echo "Starting Pull Shark farm loop for \${PR_COUNT} Pull Requests..."
 
@@ -554,23 +536,30 @@ for i in $(seq 1 \${PR_COUNT}); do
     # 3. Push branch
     git push origin $BRANCH
     
-    # 4. Open PR and merge it
-    gh pr create --title "docs: Pull Shark PR #\${i}" --body "Farming Pull Shark" --head $BRANCH --base main
-    gh pr merge --merge --delete-branch
+    # 4. Open PR with rate limit protection
+    echo "Creating Pull Request..."
+    while ! gh pr create --title "docs: Pull Shark PR #\${i}" --body "Farming Pull Shark" --head $BRANCH --base main; do
+        echo "⚠️ Terkena limit atau terjadi error. Menunggu 60 detik sebelum mencoba lagi..."
+        sleep 60
+    done
     
-    # Sleep 1 second to stay within API rate limits safely
-    sleep 1
+    # 5. Merge PR with rate limit protection
+    echo "Merging Pull Request..."
+    while ! gh pr merge --merge --delete-branch; do
+        echo "⚠️ Gagal menggabungkan. Menunggu 10 detik sebelum mencoba lagi..."
+        sleep 10
+    done
+    
+    # Sleep 2 seconds to stay within API rate limits safely
+    sleep 2
 done
 
 echo "Successfully merged \${PR_COUNT} Pull Requests!"`;
         } else {
             return `# Pull Shark Badge Farming Script (PowerShell)
-# Generates and merges ${prCount} pull requests sequentially
+# Generates and merges ${prCount} pull requests sequentially with rate-limit protection.
 
-$REPO_NAME="${repo}"
 $PR_COUNT=${prCount}
-
-cd $REPO_NAME
 
 Write-Host "Starting Pull Shark farm loop for $PR_COUNT Pull Requests..."
 
@@ -590,12 +579,26 @@ for ($i=1; $i -le $PR_COUNT; $i++) {
     # 3. Push branch
     git push origin $BRANCH
     
-    # 4. Open PR and merge it
-    gh pr create --title "docs: Pull Shark PR #$i" --body "Farming Pull Shark" --head $BRANCH --base main
-    gh pr merge --merge --delete-branch
+    # 4. Open PR with rate limit protection
+    Write-Host "Creating Pull Request..."
+    while ($true) {
+        gh pr create --title "docs: Pull Shark PR #$i" --body "Farming Pull Shark" --head $BRANCH --base main
+        if ($LASTEXITCODE -eq 0) { break }
+        Write-Host "⚠️ Terkena limit atau terjadi error. Menunggu 60 detik sebelum mencoba lagi..."
+        Start-Sleep -Seconds 60
+    }
     
-    # Sleep 1 second to stay within API rate limits safely
-    Start-Sleep -Seconds 1
+    # 5. Merge PR with rate limit protection
+    Write-Host "Merging Pull Request..."
+    while ($true) {
+        gh pr merge --merge --delete-branch
+        if ($LASTEXITCODE -eq 0) { break }
+        Write-Host "⚠️ Gagal menggabungkan. Menunggu 10 detik sebelum mencoba lagi..."
+        Start-Sleep -Seconds 10
+    }
+    
+    # Sleep 2 seconds to stay within API rate limits safely
+    Start-Sleep -Seconds 2
 }
 
 Write-Host "Successfully merged $PR_COUNT Pull Requests!"`;
@@ -606,10 +609,6 @@ Write-Host "Successfully merged $PR_COUNT Pull Requests!"`;
         if (isBash) {
             return `# Quickdraw Badge Farming Script (Bash)
 # Opens a test issue and closes it within 10 seconds.
-
-REPO_NAME="${repo}"
-
-cd "\${REPO_NAME}"
 
 # Create a temporary issue and retrieve its URL/number
 echo "Opening issue..."
@@ -626,10 +625,6 @@ echo "Done! Quickdraw badge unlocked."`;
         } else {
             return `# Quickdraw Badge Farming Script (PowerShell)
 # Opens a test issue and closes it within 10 seconds.
-
-$REPO_NAME="${repo}"
-
-cd $REPO_NAME
 
 # Create a temporary issue and retrieve its URL/number
 Write-Host "Opening issue..."
@@ -654,19 +649,13 @@ Write-Host "Done! Quickdraw badge unlocked."`;
             return `# Pair Extraordinaire Badge Farming Script (Bash)
 # Generates a co-authored commit and merges it via PR.
 
-REPO_NAME="${repo}"
-
-cd "\${REPO_NAME}"
 git checkout -b pair-farm-branch
 
 echo "Pair Extraordinaire commit" >> README.md
 git add README.md
 
-# IMPORTANT: Commit message must contain the Co-authored-by footer 
-# separated from the commit subject/body by a blank line!
-git commit -m "feat: pair extraordinaire farm
-
-Co-authored-by: ${coAuthorName} <${coAuthorEmail}>"
+# Commit with Co-authored-by footer
+git commit -m "feat: pair extraordinaire farm" -m "Co-authored-by: ${coAuthorName} <${coAuthorEmail}>"
 
 # Push and merge
 git push origin pair-farm-branch
@@ -676,27 +665,23 @@ gh pr merge --merge --delete-branch`;
             return `# Pair Extraordinaire Badge Farming Script (PowerShell)
 # Generates a co-authored commit and merges it via PR.
 
-$REPO_NAME="${repo}"
-
-cd $REPO_NAME
 git checkout -b pair-farm-branch
 
 Add-Content README.md "\`nPair Extraordinaire commit"
 git add README.md
 
-# Commit message with Co-authored-by footer
-$commitMessage = @"
-feat: pair extraordinaire farm
-
-Co-authored-by: ${coAuthorName} <${coAuthorEmail}>
-"@
-
-git commit -m $commitMessage
+# Commit with Co-authored-by footer (compatible with PowerShell string inputs)
+git commit -m "feat: pair extraordinaire farm" -m "Co-authored-by: ${coAuthorName} <${coAuthorEmail}>"
 
 # Push and merge
 git push origin pair-farm-branch
 gh pr create --title "feat: Co-authored PR" --body "Unlocking Pair Extraordinaire" --head pair-farm-branch --base main
 gh pr merge --merge --delete-branch`;
+        }
+    }
+
+    return '';
+}ch`;
         }
     }
 
